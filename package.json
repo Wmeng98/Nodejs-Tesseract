@@ -1,0 +1,23 @@
+{
+  "name": "parseserver",
+  "version": "1.0.0",
+  "description": "\"restful api web server to parse receipt images using tesseract OCR\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "RESTful",
+    "API",
+    "Tesseract",
+    "Express",
+    "Node"
+  ],
+  "author": "qhacks-wm",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.9",
+    "tesseract.js": "^1.0.14"
+  }
+}
