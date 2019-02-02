@@ -6,18 +6,8 @@ var Tesseract = require('tesseract.js');
 // Schema for model "modelTasks" is registered in the controller
 var bModel = mongoose.model('baseModel');
 
-// exports.postImg = function(req, res) {
-//   var newBasic = new bModel(req.body);
-//   newBasic.save(function(err, base) {
-//     if (err) {
-//       console.log("Error occur on post...");
-//       res.send(err);
-//     }
-//     console.log("post success: ");
-//     console.log(base);
-//     res.json(base);
-//   });
-// };
+var request = require('request');
+var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=njrkzcmpr9akvsxje7peh6z5&upc=" // hide api key when publish to github
 
 // function to retrieve array of upc codes
 function getUPCCodes(text) {
@@ -75,6 +65,10 @@ function getUPCCodes(text) {
 }
 
 
+exports.getBase = function(req, res) {
+  res.send(JSON.stringify({ Hello: "World"}));
+};
+
 
 exports.getImg = function(req, res) {
   bModel.find({}, function(err, img) {
@@ -89,32 +83,25 @@ exports.parseImg = function(req, res) {
     // console.log(req.params.imgFile);
     if (err) return res.send(err);
 
-    // Tesseract.recognize(__dirname + '/img/img.jpg')
-    //   .then(function(result){
 
-    //     console.log("result is: " + result[0]);
-    // });
 
-    Tesseract.recognize(__dirname + '/img/img.jpg')
-    .progress(function  (p) { console.log('progress', p)    })
+    Tesseract.recognize(__dirname + '/img/paper.jpg')
+    .progress(function  (p) { console.log('progress', p) })
     .then(function (result) { 
       console.log(result.text);
       console.log(getUPCCodes(result.text));
 
+      var UPCList = getUPCCodes(result.text);
+      // for (var i = 0; i < UPCList.length; i += 1) {
+        request(httpUrl + "035000521019", function(error, response, body) {
+          if (error) response.send(error);
+  
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          console.log('body:', body); // Print the HTML for the Google homepage.
+        });
+      // } 
       // send 
     })
-
-
-    // // Recognize text of any language in any format
-    // console.log(__dirname + '/img/img.jpg');
-    // tesseract.process(__dirname + '/img/img.jpg',function(err, text) {
-    //   if(err) {
-    //       console.error(err);
-    //   } else {
-    //       console.log(text);
-    //   }
-    // });
-
     res.json(img);
   });
 };

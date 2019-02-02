@@ -21,13 +21,24 @@ mongoose.connection.on("open", function(){
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+
+// CORS on ExpressJS
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
 // import routes
 var routes = require('./api/routes/routes');
 routes(app); // register the route
 
-app.listen(port);
+app.listen(process.env.PORT || port, function() {
+  console.log("Server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
-console.log("groceryParser restful api started on port: " + port);
+
+// console.log("groceryParser restful api started on port: " + port);
 
 app.use(function(req, res) {
   res.status(404).send({url: req.originalUrl + ' not found'});
