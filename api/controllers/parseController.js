@@ -32,11 +32,16 @@ exports.parseImg = function(req, res) {
     // console.log(req.params.imgFile);
     if (err) return res.send(err);
 
+    // Tesseract.recognize(__dirname + '/img/img.jpg')
+    //   .then(function(result){
+
+    //     console.log("result is: " + result[0]);
+    // });
 
     Tesseract.recognize(__dirname + '/img/img.jpg')
-      .then(function(result){
-        console.log(result)
-    });
+    .progress(function  (p) { console.log('progress', p)    })
+    .then(function (result) { console.log(result.text) })
+
     // // Recognize text of any language in any format
     // console.log(__dirname + '/img/img.jpg');
     // tesseract.process(__dirname + '/img/img.jpg',function(err, text) {
