@@ -16,6 +16,7 @@
   "author": "qhacks-wm",
   "license": "ISC",
   "dependencies": {
+    "blob": "0.0.5",
     "express": "^4.16.4",
     "http": "0.0.0",
     "mongoose": "^5.4.9",

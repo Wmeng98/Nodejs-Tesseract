@@ -8,6 +8,8 @@ var bModel = mongoose.model('baseModel');
 
 var request = require('request');
 
+var Blob = require('blob');
+
 var walmart_APIKey = process.env.WALMART_API
 var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=" + walmart_APIKey + "&upc=" // hide api key when publish to github
 
