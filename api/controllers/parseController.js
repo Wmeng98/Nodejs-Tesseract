@@ -119,7 +119,7 @@ exports.postImg = function(req, res) {
       // } 
       // send 
     })
-    res.send(JSON.stringify({ Hello: }));
+    res.send(JSON.stringify({ Hello: base64Str}));
 };
 
 
