@@ -117,14 +117,14 @@ app.post('/parse', (req, res) => {
 
   var base64Str = base64js.fromByteArray(strBinData);
 
-  base64Img.img('data:image/jpg;base64, ' + base64Str, 'img', 'work', function(err, filepath) {
+  base64Img.img('data:image/jpg;base64,' + base64Str, 'img', 'work', function(err, filepath) {
     if (err) res.send(err);
     console.log("filepath: " + filepath);
   });
 
 
       // tesseract function goes here
-      Tesseract.recognize(__dirname + '/api/controllers/img/img.jpg')
+      Tesseract.recognize(__dirname + '/img/work.jpg')
       .progress(function  (p) { console.log('progress', p) })
       .then(function (result) { 
         console.log(result.text);
