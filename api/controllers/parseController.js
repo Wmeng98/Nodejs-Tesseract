@@ -97,7 +97,7 @@ exports.postImg = function(req, res) {
     //   console.log("image base64 img: " + data);
     // });
 
-    base64Img.img('data:image/jpg;base64, ' + base64Str, './img', 'work', function(err, filepath) {
+    base64Img.img('data:image/jpg;base64, ' + base64Str, 'img', 'work', function(err, filepath) {
       if (err) res.send(err);
       //
     });
@@ -115,11 +115,12 @@ exports.postImg = function(req, res) {
   
           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
           console.log('body:', body); // Print the HTML for the Google homepage.
+
+          res.send(JSON.stringify({ Hello: response}));
         });
       // } 
       // send 
     })
-    res.send(JSON.stringify({ Hello: base64Str}));
 };
 
 
