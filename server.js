@@ -2,31 +2,9 @@ var express = require('express'); // import express module
 var app = express(); // create express app
 var port = 3000;
 
-// Schema registered here for model: todo
-// baseModel = require('./api/models/testModel');
 
 // var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-
-// mongoose instance url connection
-mongoose.Promise = global.Promise;
-
-// Important Note:
-  // But Commiting your username and password to your public repo is 
-  // sometimes very dangerous so never commit them into public repositories, 
-  // Instead you can use environment variables to store the url (containing username 
-//   and password) , to do this in your local system
-
-// mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
-// var url = process.env.MONGOLAB_URI;
-// mongoose.connect(url, {useNewUrlParser: true});
-
-
-// mongoose.connection.on("open", function(){
-//   console.log("mongodb is connected!!");
-
-//   //mongoose.connection.db.collectionNames(function)
-// });
 
 
 // Middleware
@@ -45,13 +23,165 @@ app.use(bodyParser.urlencoded({
 //   next();
 // });
 
-// import routes
-var routes = require('./api/routes/routes');
-routes(app); // register the route
+// // import routes
+// var routes = require('./api/routes/routes');
+// routes(app); // register the route
 
 app.listen(process.env.PORT || port, function() {
   console.log("Server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
+
+
+
+
+
+app.get('/', (req, res) => {
+  res.send(JSON.stringify({Hello: "World"}));
+});
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+// prepare the header
+var postheaders = {
+  'Content-Type' : 'application/json',
+};
+var Tesseract = require('tesseract.js');
+// Schema for model "modelTasks" is registered in the controller
+// var bModel = mongoose.model('baseModel');
+
+var request = require('request');
+
+var https = require('https');
+
+var base64js = require('base64-js');
+var base64Img = require('base64-img');
+
+var walmart_APIKey = process.env.WALMART_API
+var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=" + walmart_APIKey + "&upc=" // hide api key when publish to github
+
+// function to retrieve array of upc codes
+function getUPCCodes(text) {
+  // console.log("text >>> ");
+  // console.log(text);
+
+  var words = text.split(" ");
+  var tempUCP = "";
+  var UCPList = new Array();
+
+  // iterate through each character in the string
+  var currUCPLength = 0;
+
+  for (var i = 0; i < words.length; i += 1) {
+    // console.log("word >>> " + words[i]);
+    // only consider words where length of string >= 12
+    
+    if (words[i].includes("*")) { // assumption reached-> ACCOUNT # LINE, hence past actual items list in receipt
+      return UCPList;
+    }
+    if (words[i].length >= 12) {
+      for (var j = 0; j < words[i].length; j += 1) {
+        // If char in word is a number, add to tempUCP
+        var parsed = parseInt(words[i][j], 10)
+        if (!isNaN(parsed)) {
+          if (currUCPLength == 11) { // add last integer to ucp and restart count
+            tempUCP += words[i][j];
+
+            // compare with exceptional condition
+            if (tempUCP != "111111111111") {
+              UCPList.push(tempUCP);
+            }
+            // Reset, look for new ucp
+            currUCPLength = 0;
+            tempUCP = "";
+          } else {
+            tempUCP += words[i][j];
+            currUCPLength += 1;
+          }
+        }
+        else { // Not an integer
+          // reset counts
+          tempUCP = "";
+          currUCPLength = 0;
+        }
+      }
+    }
+  }
+
+  console.log("UCP list length: " + UCPList.length);
+  for (var i = 0; i < UCPList.length; i += 1) {
+    console.log(" >> " + UCPList[i]);
+  }
+  return UCPList;
+}
+
+// the post options
+var optionspost = {
+  path : '/parse',
+  method : 'POST',
+  headers : postheaders
+};
+
+console.info('Options prepared:');
+console.info(optionspost);
+console.info('Do the POST call');
+
+// do the POST call
+var reqPost = https.request(optionspost, function(res) {
+  console.log("statusCode: ", res.statusCode);
+  // uncomment it for header details
+//  console.log("headers: ", res.headers);
+
+  res.on('data', function(d) {
+      console.info('POST result:\n');
+      process.stdout.write(d);
+
+      var strBinData = req.body.Field;
+
+      // create a blob object to pass the tesseract
+  
+      var base64Str = base64js.fromByteArray(strBinData);
+
+      res.send("done");
+  
+      base64Img.img('data:image/jpg;base64, ' + base64Str, 'img/work.jpg', 'work', function(err, filepath) {
+        if (err) res.send(err);
+        console.log("filepath: " + filepath);
+      });
+      
+      // tesseract function goes here
+      Tesseract.recognize(__dirname + '/img/work.jpg')
+      .progress(function  (p) { console.log('progress', p) })
+      .then(function (result) { 
+        console.log(result.text);
+        console.log(getUPCCodes(result.text));
+  
+        var UPCList = getUPCCodes(result.text);
+        // for (var i = 0; i < UPCList.length; i += 1) {
+          request(httpUrl + "035000521019", function(error, response, body) {
+            if (error) response.send(error);
+    
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log('body:', body); // Print the HTML for the Google homepage.
+          });
+        // } 
+        // send 
+      })
+      
+      console.info('\n\nPOST completed');
+
+  });
+});
+
+// write the json data
+reqPost.end();
+reqPost.on('error', function(e) {
+  console.error(e);
+});
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
 
 // console.log("groceryParser restful api started on port: " + port);
