@@ -8,7 +8,8 @@ var bModel = mongoose.model('baseModel');
 
 var request = require('request');
 
-var Blob = require('blob');
+var base64js = require('base64-js');
+var base64Img = require('base64-img');
 
 var walmart_APIKey = process.env.WALMART_API
 var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=" + walmart_APIKey + "&upc=" // hide api key when publish to github
@@ -88,12 +89,13 @@ exports.postImg = function(req, res) {
     console.log("**********");
     // create a blob object to pass the tesseract
 
-    var blob = new Blob(strBinData, {type: "application/octet-stream"});
+    base64js.fromByteArray(strBinData);
+    base64Img.base64('img/work.jpg', function(err, data) {
+      if (err) res.send(err);
+      console.log("image base64 img: " + data);
+    })
 
-    console.log("********")
-    console.log(blob);
-
-    Tesseract.recognize(blob)
+    Tesseract.recognize(__dirname + "/img/work.jpg");
     .progress(function (p) { console.log('progress', p) })
     .then(function (result) { 
       console.log(result.text);

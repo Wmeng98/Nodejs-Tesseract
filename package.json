@@ -16,6 +16,8 @@
   "author": "qhacks-wm",
   "license": "ISC",
   "dependencies": {
+    "base64-img": "^1.0.4",
+    "base64-js": "^1.3.0",
     "blob": "0.0.5",
     "express": "^4.16.4",
     "http": "0.0.0",
