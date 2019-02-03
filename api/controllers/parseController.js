@@ -97,7 +97,7 @@ exports.postImg = function(req, res) {
     //   console.log("image base64 img: " + data);
     // });
 
-    base64Img.img('data:image/jpg;base64,' + base64Str, './img', 'work', function(err, filepath) {
+    base64Img.img('data:image/jpg;base64, ' + base64Str, './img', 'work', function(err, filepath) {
       if (err) res.send(err);
       //
     });
