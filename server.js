@@ -140,12 +140,12 @@ app.post('/parse', (req, res) => {
   
         var UPCList = getUPCCodes(result.text);
         
-        
+        var recordList = "";
         for (var i = 0; i < UPCList.length; i += 1) {
           request(httpUrl + UPCList[i], function(error, response, body) {
             if (error) res.send(error);
-            
             var record = "";
+            
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             var nm = body.name;
@@ -166,9 +166,10 @@ app.post('/parse', (req, res) => {
             } else {
               record += thumb + "!";
             }
+            recordList += record;
           });
         }
-        res.send(record); // send string
+        res.send(recordList); // send string
         // send 
       });
     });
