@@ -111,7 +111,7 @@ app.get('/', (req, res) => {
 app.post('/parse', (req, res) => {
   res.send(JSON.stringify({Hello: "Doomsday"}));
 
-  for (int )
+  // for (int)
 
   var strBinData = req.body.get("Field"); // base64 encoded string
   console.log("encoded: " + strBinData);
