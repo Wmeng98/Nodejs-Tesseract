@@ -157,14 +157,14 @@ app.post('/parse', (req, res) => {
             var upcode = body.upc;
             var thumb = body.thumbnailImage;
 
-            record += nm + "#";
-            record += dt + "#";
-            record += sale + "#";
-            record += upcode + "#";
+            record = record + nm + "#";
+            record = record + dt + "#";
+            record = record + sale + "#";
+            record = record + upcode + "#";
             if (i == UPCList.length) {
               record += thumb;            
             } else {
-              record += thumb + "!";
+              record = record + thumb + "!";
             }
             recordList += record;
           });
