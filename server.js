@@ -104,7 +104,7 @@ app.listen(process.env.PORT || port, function() {
 
 app.get('/', (req, res) => {
   console.log("type of req >>> " + typeof req);
-  res.send(JSON.stringify({Grocery: "RESTful API"}));
+  res.send(JSON.stringify({"Grocery": "RESTful API"}));
 });
 
 
@@ -146,7 +146,7 @@ app.post('/parse', (req, res) => {
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             
-            response.send(JSON.stringify({Grocery: "restful api"}));
+            response.send(JSON.stringify({"Grocery": "restful api"}));
 
           });
         } 
