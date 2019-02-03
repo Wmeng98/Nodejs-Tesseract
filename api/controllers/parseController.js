@@ -77,7 +77,7 @@ exports.getImg = function(req, res) {
     if (err) res.send(err);
     // console.log("img is: " + img);
     // res.json(img);
-    res.send(JSON.stringify({Parse: "Called!"});
+    res.send(JSON.stringify({Parse: "Called!"}));
   });
 };
 
