@@ -133,28 +133,28 @@ app.post('/parse', (req, res) => {
 
 
       // tesseract function goes here
-      Tesseract.recognize(__dirname + '/api/controllers/img/' + receiptToParse)
-      .progress(function  (p) { console.log('progress', p) })
-      .then(function (result) { 
-        console.log(result.text);
-        console.log(getUPCCodes(result.text));
+      // Tesseract.recognize(__dirname + '/api/controllers/img/' + receiptToParse)
+      // .progress(function  (p) { console.log('progress', p) })
+      // .then(function (result) { 
+      //   console.log(result.text);
+      //   console.log(getUPCCodes(result.text));
   
-        var UPCList = getUPCCodes(result.text);
+      //   var UPCList = getUPCCodes(result.text);
         
-        var recordList = "";
-        for (var i = 0; i < UPCList.length; i += 1) {
+      //   var recordList = "";
+      //   for (var i = 0; i < UPCList.length; i += 1) {
 
 
 
 
-          // shorthand syntax, buffered response
-          http.get(httpUrl + UPCList[i], function (err, res) {
-            if (err) {
-              console.error(err);
-              return;
-            }
-            console.log(res.code, res.headers, res.buffer.toString());
-          });
+      //     // shorthand syntax, buffered response
+      //     http.get(httpUrl + UPCList[i], function (err, res) {
+      //       if (err) {
+      //         console.error(err);
+      //         return;
+      //       }
+      //       console.log(res.code, res.headers, res.buffer.toString());
+      //     });
 
 
 
@@ -192,10 +192,10 @@ app.post('/parse', (req, res) => {
           //   }
           //   recordList += record;
           // });
-        }
-        res.send(recordList); // send string
+        // }
+        res.send("Receipt parsed..."); // send string
         // send 
-      });
+      // });
     });
       // console.info('\n\nPOST completed');
 
