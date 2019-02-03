@@ -129,7 +129,9 @@ console.info('Do the POST call');
 
 // do the POST call
 var reqPost = https.request(optionspost, function(res) {
-  console.log("statusCode: ", res.statusCode);
+  console.log("*********");
+  console.log(" >>>> statusCode: ", res.statusCode);
+  console.log("*********");
   // uncomment it for header details
 //  console.log("headers: ", res.headers);
 
