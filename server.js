@@ -141,12 +141,12 @@ app.post('/parse', (req, res) => {
         var UPCList = getUPCCodes(result.text);
         for (var i = 0; i < UPCList.length; i += 1) {
           request(httpUrl + UPCList[i], function(error, response, body) {
-            if (error) res.send(error);
+            if (error) response.send(error);
     
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             
-            res.send(JSON.stringify({Grocery: "restful api"}));
+            response.send(JSON.stringify({Grocery: "restful api"}));
 
           });
         } 
