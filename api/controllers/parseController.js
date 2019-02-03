@@ -116,7 +116,7 @@ exports.postImg = function(req, res) {
           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
           console.log('body:', body); // Print the HTML for the Google homepage.
 
-          res.send(JSON.stringify({ Hello: response}));
+          res.send(response.body);
         });
       // } 
       // send 
