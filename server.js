@@ -133,16 +133,16 @@ app.post('/parse', (req, res) => {
 
 
       // tesseract function goes here
-      // Tesseract.recognize(__dirname + '/api/controllers/img/' + receiptToParse)
-      // .progress(function  (p) { console.log('progress', p) })
-      // .then(function (result) { 
-      //   console.log(result.text);
-      //   console.log(getUPCCodes(result.text));
+      Tesseract.recognize(__dirname + '/api/controllers/img/' + receiptToParse)
+      .progress(function  (p) { console.log('progress', p) })
+      .then(function (result) { 
+        console.log(result.text);
+        console.log(getUPCCodes(result.text));
   
-      //   var UPCList = getUPCCodes(result.text);
+        var UPCList = getUPCCodes(result.text);
         
-      //   var recordList = "";
-      //   for (var i = 0; i < UPCList.length; i += 1) {
+        var recordList = "";
+        for (var i = 0; i < UPCList.length; i += 1) {
 
 
 
@@ -158,47 +158,49 @@ app.post('/parse', (req, res) => {
 
 
 
-          // request(httpUrl + UPCList[i], function(error, response, body) {
-          //   if (error) res.send(error);
-          //   var record = "";
+          request(httpUrl + UPCList[i], function(error, response, body) {
+            if (error) res.send(error);
+            var record = "";
             
 
-          //   console.log(">>> reponse" + response.name);
-          //   var obj = JSON.parse(body);
+            console.log(">>> RESPONSE..." + response.data);
 
 
-          //   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-          //   console.log('body:', body); // Print the HTML for the Google homepage.
-          //   var nm = body.name;
-
-          //   // // need to jsonify the json string to work with structure
-          //   // console.log( body);
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log('body:', body); // Print the HTML for the Google homepage.
             
-          //   var date = Date.now;
-          //   var dt = date.toString();
-            
-          //   var sale = body.salePrice;
-          //   var upcode = body.upc;
-          //   var thumb = body.thumbnailImage;
+            //console.log("sldkfjsl: " + body.errors.message);
+            console.log("JUMBALUMBA ", JSON.stringify(body));
+            var nm = body.name;
 
-          //   record = record + nm + "#";
-          //   record = record + dt + "#";
-          //   record = record + sale + "#";
-          //   record = record + upcode + "#";
-          //   if (i == UPCList.length) {
-          //     record += thumb;            
-          //   } else {
-          //     record = record + thumb + "!";
-          //   }
-          //   recordList += record;
-          // });
-        // }
+            // // need to jsonify the json string to work with structure
+            // console.log( body);
+            
+            var date = Date.now;
+            var dt = date.toString();
+            
+            var sale = body.salePrice;
+            var upcode = body.upc;
+            var thumb = body.thumbnailImage;
+
+            record = record + nm + "#";
+            record = record + dt + "#";
+            record = record + sale + "#";
+            record = record + upcode + "#";
+            if (i == UPCList.length) {
+              record += thumb;            
+            } else {
+              record = record + thumb + "!";
+            }
+            recordList += record;
+          });
+        }
         res.send("Receipt parsed..."); // send string
         // send 
       // });
     });
       // console.info('\n\nPOST completed');
-
+  });
 
 // console.log("groceryParser restful api started on port: " + port);
 
