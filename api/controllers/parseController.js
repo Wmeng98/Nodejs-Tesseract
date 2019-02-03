@@ -81,48 +81,49 @@ exports.getBase = function(req, res) {
 //   // res.json(img);
 // });
 exports.postImg = function(req, res) {
-    // get ginary data file in string format
-    
-    var strBinData = req.body.Field;
-    console.log("**********");
-    // console.log(">>>> " + strBinData);
-    console.log("**********");
-    // create a blob object to pass the tesseract
 
-    var base64Str = base64js.fromByteArray(strBinData);
-    // console.log("base 64 string: " + base64Str);
+      var strBinData = req.body.Field;
 
-    // base64Img.base64('img/work.png', function(err, data) {
-    //   if (err) res.send(err);
-    //   console.log("image base64 img: " + data);
-    // });
-
-    base64Img.img('data:image/jpg;base64, ' + base64Str, 'img/', 'work', function(err, filepath) {
-      if (err) res.send(err);
-      console.log("filepath: " + filepath);
-      //
-    });
-
-    Tesseract.recognize(__dirname + "/img/work.jpg")
-    .progress(function (p) { console.log('progress', p) })
-    .then(function (result) { 
-      console.log(result.text);
-      console.log(getUPCCodes(result.text));
-
-      var UPCList = getUPCCodes(result.text);
-      // for (var i = 0; i < UPCList.length; i += 1) {
-        request(httpUrl + "035000521019", function(error, response, body) {
-          if (error) response.send(error);
+      // create a blob object to pass the tesseract
   
-          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-          console.log('body:', body); // Print the HTML for the Google homepage.
+      var base64Str = base64js.fromByteArray(strBinData);
+  
+      // console.log("base 64 string: " + base64Str);
+  
+      // base64Img.base64('img/work.png', function(err, data) {
+      //   if (err) res.send(err);
+      //   console.log("image base64 img: " + data);
+      // });
+  
+      base64Img.img('data:image/png;base64, ' + base64Str, 'api/controllers/img', 'work', function(err, filepath) {
+        if (err) res.send(err);
+        console.log("filepath: " + filepath);
+        //
 
-          res.send(response.body);
+        Tesseract.recognize(__dirname + "/img/work.jpg")
+        .progress(function (p) { console.log('progress', p) })
+        .then(function (result) { 
+          console.log(result.text);
+          console.log(getUPCCodes(result.text));
+    
+          var UPCList = getUPCCodes(result.text);
+          // for (var i = 0; i < UPCList.length; i += 1) {
+            request(httpUrl + "035000521019", function(error, response, body) {
+              if (error) response.send(error);
+      
+              console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+              console.log('body:', body); // Print the HTML for the Google homepage.
+              
+              // res.send(response.body);
+            });
+          // } 
+          // send 
         });
-      // } 
-      // send 
-    })
-};
+
+      });
+  
+
+  };
 
 
 exports.parseImg = function(req, res) {

@@ -17,9 +17,9 @@ mongoose.Promise = global.Promise;
   // Instead you can use environment variables to store the url (containing username 
 //   and password) , to do this in your local system
 
-// mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
-var url = process.env.MONGOLAB_URI;
-mongoose.connect(url, {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
+// var url = process.env.MONGOLAB_URI;
+// mongoose.connect(url, {useNewUrlParser: true});
 
 
 mongoose.connection.on("open", function(){
