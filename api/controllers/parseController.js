@@ -102,7 +102,7 @@ exports.postImg = function(req, res) {
       //
     });
 
-    Tesseract.recognize(__dirname + "/img/work.png")
+    Tesseract.recognize(__dirname + "/img/work.jpg")
     .progress(function (p) { console.log('progress', p) })
     .then(function (result) { 
       console.log(result.text);
