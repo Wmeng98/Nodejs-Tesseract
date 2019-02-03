@@ -28,9 +28,13 @@ mongoose.connection.on("open", function(){
   //mongoose.connection.db.collectionNames(function)
 });
 // Middleware
-app.use(bodyParser.urlencoded({limit: '20mb', extended: true, parameterLimit: 20000}));
-app.use(bodyParser.json({ limit: '20mb'}));
+app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({
+  parameterLimit: 100000,
+  limit: '150mb',
+  extended: true
+}));
 
 // CORS on ExpressJS
 // app.use(function(req, res, next) {
