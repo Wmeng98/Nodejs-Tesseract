@@ -115,6 +115,7 @@ app.post('/parse', (req, res) => {
   // for (int)
   
   var strBinData = req.body.get('Field'); // base64 encoded string
+  console.log("req body json: " + JSON.stringify(req.body.json()));
   console.log("encoded: " + strBinData);
   console.log("stringify",+req.stringify);
   console.log("base64",+req.base64Str);
