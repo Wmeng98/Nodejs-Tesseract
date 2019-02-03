@@ -80,27 +80,29 @@ exports.getBase = function(req, res) {
 exports.postImg = function(req, res) {
     // get ginary data file in string format
     
-    // var strBinData = req.Field;
-    
+    var strBinData = req.body.value;
+    console.log("**********");
+    console.log(">>>> " + strBinData);
+    console.log("**********");
     // create a blob object to pass the tesseract
-    // var blob = Blob(["strBinData"], {type: "application/octet-stream"});
-    // Tesseract.recognize(blob)
-    // .progress(function  (p) { console.log('progress', p) })
-    // .then(function (result) { 
-    //   console.log(result.text);
-    //   console.log(getUPCCodes(result.text));
+    var blob = Blob([strBinData], {type: "application/octet-stream"});
+    Tesseract.recognize(blob)
+    .progress(function  (p) { console.log('progress', p) })
+    .then(function (result) { 
+      console.log(result.text);
+      console.log(getUPCCodes(result.text));
 
-    //   var UPCList = getUPCCodes(result.text);
-    //   // for (var i = 0; i < UPCList.length; i += 1) {
-    //     request(httpUrl + "035000521019", function(error, response, body) {
-    //       if (error) response.send(error);
+      var UPCList = getUPCCodes(result.text);
+      // for (var i = 0; i < UPCList.length; i += 1) {
+        request(httpUrl + "035000521019", function(error, response, body) {
+          if (error) response.send(error);
   
-    //       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    //       console.log('body:', body); // Print the HTML for the Google homepage.
-    //     });
-    //   // } 
-    //   // send 
-    // })
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          console.log('body:', body); // Print the HTML for the Google homepage.
+        });
+      // } 
+      // send 
+    })
     res.send(JSON.stringify({ Hello: "Doom"}));
 };
 
