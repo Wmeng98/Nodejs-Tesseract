@@ -72,13 +72,15 @@ exports.getBase = function(req, res) {
 };
 
 
+// bModel.find({}, function(err, img) {
+//   if (err) res.send(err);
+//   // console.log("img is: " + img);
+//   // res.json(img);
+// });
 exports.getImg = function(req, res) {
-  bModel.find({}, function(err, img) {
-    if (err) res.send(err);
-    // console.log("img is: " + img);
-    // res.json(img);
+
     res.send(JSON.stringify({ Hello: "Doom"}));
-  });
+
 };
 
 exports.parseImg = function(req, res) {
