@@ -76,7 +76,7 @@ exports.getImg = function(req, res) {
   bModel.find({}, function(err, img) {
     if (err) res.send(err);
     // console.log("img is: " + img);
-    res.json(img);
+    res.send.json(img);
   });
 };
 
