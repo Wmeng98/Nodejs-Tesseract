@@ -103,6 +103,7 @@ app.listen(process.env.PORT || port, function() {
 
 
 app.get('/', (req, res) => {
+  console.log("type of req >>> " + typeof req);
   res.send(JSON.stringify({Hello: "World"}));
 });
 
@@ -113,7 +114,7 @@ app.post('/parse', (req, res) => {
 
   // for (int)
 
-  var strBinData = req.body.get("Field"); // base64 encoded string
+  var strBinData = req.body.get('Field'); // base64 encoded string
   console.log("encoded: " + strBinData);
   
 
