@@ -153,11 +153,11 @@ app.post('/parse', (req, res) => {
 
             res.json(
               {
-                  name: name1,
+                  name: nm,
                   date: dt,
                   price: sale,
-                  code = upcode,
-                  thumbnail = thumb
+                  code: upcode,
+                  thumbnail: thumb
 
               }
             );
