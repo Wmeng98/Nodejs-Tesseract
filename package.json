@@ -4,7 +4,7 @@
   "description": "\"restful api web server to parse receipt images using tesseract OCR\"",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "keywords": [
     "RESTful",
