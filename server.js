@@ -149,7 +149,7 @@ app.post('/parse', (req, res) => {
 
             console.log(">>> reponse" + response.name);
             var obj = JSON.parse(body);
-            console.log("body sh: " + obj);
+
 
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
