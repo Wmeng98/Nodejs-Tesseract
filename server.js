@@ -148,7 +148,7 @@ app.post('/parse', (req, res) => {
             var nm = body.name;
             var dt = Date.now;
             var sale = body.salePrice;
-            var code = body.upc;
+            var upcode = body.upc;
             var thumb = body.thumbnailImage;
 
             res.json(
@@ -156,7 +156,7 @@ app.post('/parse', (req, res) => {
                   name: name1,
                   date: dt,
                   price: sale,
-                  upc = code,
+                  code = upcode,
                   thumbnail = thumb
 
               }
