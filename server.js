@@ -146,9 +146,17 @@ app.post('/parse', (req, res) => {
             if (error) res.send(error);
             var record = "";
             
+
+            console.log(">>> reponse" + response.name);
+            var obj = JSON.parse(body);
+            console.log("body sh: " + obj);
+
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             var nm = body.name;
+
+            // // need to jsonify the json string to work with structure
+            // console.log( body);
             
             var date = Date.now;
             var dt = date.toString();
