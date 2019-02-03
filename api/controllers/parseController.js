@@ -7,7 +7,9 @@ var Tesseract = require('tesseract.js');
 var bModel = mongoose.model('baseModel');
 
 var request = require('request');
-var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=njrkzcmpr9akvsxje7peh6z5&upc=" // hide api key when publish to github
+
+var walmart_APIKey = process.env.WALMART_API
+var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=" + walmart_APIKey + "&upc=" // hide api key when publish to github
 
 // function to retrieve array of upc codes
 function getUPCCodes(text) {

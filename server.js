@@ -10,7 +10,17 @@ var bodyParser = require('body-parser');
 
 // mongoose instance url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
+
+// Important Note:
+  // But Commiting your username and password to your public repo is 
+  // sometimes very dangerous so never commit them into public repositories, 
+  // Instead you can use environment variables to store the url (containing username 
+//   and password) , to do this in your local system
+
+// mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
+var url = process.env.MONGOLAB_URI;
+mongoose.connect(url, {useNewUrlParser: true});
+
 
 mongoose.connection.on("open", function(){
   console.log("mongodb is connected!!");
