@@ -13,10 +13,10 @@ module.exports = function(app) {
     .post(basicParser.postImg);
     // .post(basicParser.postImg);
 
-  app.route('/parse/:imgFile')
-    .get(basicParser.parseImg);
-  //   .get(todoList.getTodo)
-  //   .put(todoList.updateTodo)
-  //   .delete(todoList.deleteTodo);
+  // app.route('/parse/:imgFile')
+  //   .get(basicParser.parseImg);
+  // //   .get(todoList.getTodo)
+  // //   .put(todoList.updateTodo)
+  // //   .delete(todoList.deleteTodo);
 
 };
