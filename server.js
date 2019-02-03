@@ -15,7 +15,7 @@ var base64Img = require('base64-img');
 
 var walmart_APIKey = process.env.WALMART_API
 var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=" + walmart_APIKey + "&upc=" // hide api key when publish to github
-
+var receiptToParse = "customReceipt.png";
 
 // var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
@@ -104,12 +104,9 @@ app.listen(process.env.PORT || port, function() {
 
 app.get('/', (req, res) => {
   console.log("type of req >>> " + typeof req);
-  res.send(JSON.stringify({Hello: "World"}));
+  res.send(JSON.stringify({Grocery: "RESTful API"}));
 });
 
-app.get('/getJSON', (req, res) => {
-  res.send({ dataURl: "" });
-});
 
 
 // post method for img
@@ -135,16 +132,16 @@ app.post('/parse', (req, res) => {
 
 
       // tesseract function goes here
-      Tesseract.recognize(__dirname + '/img/work.jpg')
+      Tesseract.recognize(__dirname + '/api/controllers/img/' + receiptToParse)
       .progress(function  (p) { console.log('progress', p) })
       .then(function (result) { 
         console.log(result.text);
         console.log(getUPCCodes(result.text));
   
         var UPCList = getUPCCodes(result.text);
-        // for (var i = 0; i < UPCList.length; i += 1) {
-          request(httpUrl + "035000521019", function(error, response, body) {
-            if (error) response.send(error);
+        for (var i = 0; i < UPCList.length; i += 1) {
+          request(httpUrl + UPCList[i], function(error, response, body) {
+            if (error) res.send(error);
     
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
@@ -152,16 +149,12 @@ app.post('/parse', (req, res) => {
             res.send(JSON.stringify({"name": body.name, "datecreated": Date.now, "price": body.salePrice, "upc": body.upc, "thumbnailImage": body.thumbnailImage}));
 
           });
-        // } 
+        } 
         // send 
       })
       
-      console.info('\n\nPOST completed');
-
-
+      // console.info('\n\nPOST completed');
 });
-
-
 
 
 // console.log("groceryParser restful api started on port: " + port);
