@@ -87,13 +87,8 @@ exports.postImg = function(req, res) {
       // create a blob object to pass the tesseract
   
       var base64Str = base64js.fromByteArray(strBinData);
-  
-      // console.log("base 64 string: " + base64Str);
-  
-      // base64Img.base64('img/work.png', function(err, data) {
-      //   if (err) res.send(err);
-      //   console.log("image base64 img: " + data);
-      // });
+
+      res.send("done");
   
       base64Img.img('data:image/png;base64, ' + base64Str, 'api/controllers/img', 'work', function(err, filepath) {
         if (err) res.send(err);
@@ -121,8 +116,6 @@ exports.postImg = function(req, res) {
         });
 
       });
-  
-
   };
 
 
