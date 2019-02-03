@@ -10,7 +10,7 @@ module.exports = function(app) {
 
   // todolist route
   app.route('/parse')
-    .get(basicParser.getImg);
+    .post(basicParser.postImg);
     // .post(basicParser.postImg);
 
   app.route('/parse/:imgFile')
