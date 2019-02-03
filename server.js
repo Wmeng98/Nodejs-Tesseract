@@ -107,28 +107,31 @@ app.get('/', (req, res) => {
   res.send(JSON.stringify({Hello: "World"}));
 });
 
+app.get('/getJSON', (req, res) => {
+  res.send({ dataURl: "" });
+});
+
 
 // post method for img
 app.post('/parse', (req, res) => {
-  res.send(JSON.stringify({Hello: "Doomsday"}));
+  
+  // Temporary solution, use self made receipt with UPCs that are available
 
-  // for (int)
+  // var strBinData = req.get('Field'); // base64 encoded string
+  // console.log("req body json: " + JSON.stringify(req.body.json()));
+  // console.log("encoded: " + strBinData);
+  // console.log("stringify",+req.stringify);
+  // console.log("base64",+req.base64Str);
 
-  var strBinData = req.get('Field'); // base64 encoded string
-  console.log("req body json: " + JSON.stringify(req.body.json()));
-  console.log("encoded: " + strBinData);
-  console.log("stringify",+req.stringify);
-  console.log("base64",+req.base64Str);
-
-  // var base64Str = base64js.fromByteArray(strBinData);
+  // // var base64Str = base64js.fromByteArray(strBinData);
   
 
-  console.log('>>> ' + base64Str);
+  // console.log('>>> ' + base64Str);
 
-  base64Img.img('data:image/jpg;base64,' + base64Str, 'img', 'work', function(err, filepath) {
-    if (err) res.send(err);
-    console.log("filepath: " + filepath);
-  });
+  // base64Img.img('data:image/jpg;base64,' + base64Str, 'img', 'work', function(err, filepath) {
+  //   if (err) res.send(err);
+  //   console.log("filepath: " + filepath);
+  // });
 
 
       // tesseract function goes here
@@ -145,6 +148,9 @@ app.post('/parse', (req, res) => {
     
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
+            
+            res.send(JSON.stringify({"name": body.name, "datecreated": Date.now, "price": body.salePrice, "upc": body.upc, "thumbnailImage": body.thumbnailImage}));
+
           });
         // } 
         // send 
@@ -156,70 +162,6 @@ app.post('/parse', (req, res) => {
 });
 
 
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-
-// prepare the header
-
-
-
-// // do the POST call
-// var reqPost = https.request(optionspost, function(res) {
-//   console.log("*********");
-//   console.log(" >>>> statusCode: ", res.statusCode);
-//   console.log("*********");
-//   // uncomment it for header details
-// //  console.log("headers: ", res.headers);
-
-//   res.on('data', function(d) {
-//       console.info('POST result:\n');
-//       process.stdout.write(d);
-
-//       var strBinData = req.body.Field;
-
-//       // create a blob object to pass the tesseract
-  
-//       var base64Str = base64js.fromByteArray(strBinData);
-
-//       res.send("done");
-  
-//       base64Img.img('data:image/jpg;base64, ' + base64Str, 'img/work.jpg', 'work', function(err, filepath) {
-//         if (err) res.send(err);
-//         console.log("filepath: " + filepath);
-//       });
-      
-//       // tesseract function goes here
-//       Tesseract.recognize(__dirname + '/img/work.jpg')
-//       .progress(function  (p) { console.log('progress', p) })
-//       .then(function (result) { 
-//         console.log(result.text);
-//         console.log(getUPCCodes(result.text));
-  
-//         var UPCList = getUPCCodes(result.text);
-//         // for (var i = 0; i < UPCList.length; i += 1) {
-//           request(httpUrl + "035000521019", function(error, response, body) {
-//             if (error) response.send(error);
-    
-//             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-//             console.log('body:', body); // Print the HTML for the Google homepage.
-//           });
-//         // } 
-//         // send 
-//       })
-      
-//       console.info('\n\nPOST completed');
-
-//   });
-// });
-
-// // write the json data
-// reqPost.end();
-// reqPost.on('error', function(e) {
-//   console.error(e);
-// });
-
-////////////////////////////////////////////////
-////////////////////////////////////////////////
 
 
 // console.log("groceryParser restful api started on port: " + port);
