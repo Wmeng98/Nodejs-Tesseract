@@ -2,51 +2,6 @@ var express = require('express'); // import express module
 var app = express(); // create express app
 var port = 3000;
 
-
-// var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-
-
-// Middleware
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({
-  parameterLimit: 100000,
-  limit: '150mb',
-  extended: true
-}));
-
-// CORS on ExpressJS
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
-// // import routes
-// var routes = require('./api/routes/routes');
-// routes(app); // register the route
-
-app.listen(process.env.PORT || port, function() {
-  console.log("Server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
-
-
-
-
-
-app.get('/', (req, res) => {
-  res.send(JSON.stringify({Hello: "World"}));
-});
-
-
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-
-// prepare the header
-var postheaders = {
-  'Content-Type' : 'application/json',
-};
 var Tesseract = require('tesseract.js');
 // Schema for model "modelTasks" is registered in the controller
 // var bModel = mongoose.model('baseModel');
@@ -60,6 +15,11 @@ var base64Img = require('base64-img');
 
 var walmart_APIKey = process.env.WALMART_API
 var httpUrl = "http://api.walmartlabs.com/v1/items?apiKey=" + walmart_APIKey + "&upc=" // hide api key when publish to github
+
+
+// var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+
 
 // function to retrieve array of upc codes
 function getUPCCodes(text) {
@@ -116,44 +76,55 @@ function getUPCCodes(text) {
   return UCPList;
 }
 
-// the post options
-var optionspost = {
-  path : '/parse',
-  method : 'POST',
-  headers : postheaders
-};
+// Middleware
+app.use(bodyParser.json());
 
-console.info('Options prepared:');
-console.info(optionspost);
-console.info('Do the POST call');
+app.use(bodyParser.urlencoded({
+  parameterLimit: 100000,
+  limit: '150mb',
+  extended: true
+}));
 
-// do the POST call
-var reqPost = https.request(optionspost, function(res) {
-  console.log("*********");
-  console.log(" >>>> statusCode: ", res.statusCode);
-  console.log("*********");
-  // uncomment it for header details
-//  console.log("headers: ", res.headers);
+// CORS on ExpressJS
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
-  res.on('data', function(d) {
-      console.info('POST result:\n');
-      process.stdout.write(d);
+// // import routes
+// var routes = require('./api/routes/routes');
+// routes(app); // register the route
 
-      var strBinData = req.body.Field;
+app.listen(process.env.PORT || port, function() {
+  console.log("Server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
-      // create a blob object to pass the tesseract
-  
-      var base64Str = base64js.fromByteArray(strBinData);
 
-      res.send("done");
-  
-      base64Img.img('data:image/jpg;base64, ' + base64Str, 'img/work.jpg', 'work', function(err, filepath) {
-        if (err) res.send(err);
-        console.log("filepath: " + filepath);
-      });
-      
+
+
+
+app.get('/', (req, res) => {
+  res.send(JSON.stringify({Hello: "World"}));
+});
+
+
+// post method for img
+app.post('/parse', (req, res) => {
+  res.send(JSON.stringify({Hello: "Doomsday"}));
+
+  var strBinData = req.body.Field;
+
+  // var base64Str = base64js.fromByteArray(strBinData);
+
+  base64Img.img('data:image/jpg;base64, ' + "", 'img', 'work', function(err, filepath) {
+    if (err) res.send(err);
+    console.log("filepath: " + filepath);
+  });
+
+
       // tesseract function goes here
-      Tesseract.recognize(__dirname + '/img/work.jpg')
+      Tesseract.recognize(__dirname + '/api/controllers/img/img.jpg')
       .progress(function  (p) { console.log('progress', p) })
       .then(function (result) { 
         console.log(result.text);
@@ -173,14 +144,71 @@ var reqPost = https.request(optionspost, function(res) {
       
       console.info('\n\nPOST completed');
 
-  });
+
 });
 
-// write the json data
-reqPost.end();
-reqPost.on('error', function(e) {
-  console.error(e);
-});
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+// prepare the header
+
+
+
+// // do the POST call
+// var reqPost = https.request(optionspost, function(res) {
+//   console.log("*********");
+//   console.log(" >>>> statusCode: ", res.statusCode);
+//   console.log("*********");
+//   // uncomment it for header details
+// //  console.log("headers: ", res.headers);
+
+//   res.on('data', function(d) {
+//       console.info('POST result:\n');
+//       process.stdout.write(d);
+
+//       var strBinData = req.body.Field;
+
+//       // create a blob object to pass the tesseract
+  
+//       var base64Str = base64js.fromByteArray(strBinData);
+
+//       res.send("done");
+  
+//       base64Img.img('data:image/jpg;base64, ' + base64Str, 'img/work.jpg', 'work', function(err, filepath) {
+//         if (err) res.send(err);
+//         console.log("filepath: " + filepath);
+//       });
+      
+//       // tesseract function goes here
+//       Tesseract.recognize(__dirname + '/img/work.jpg')
+//       .progress(function  (p) { console.log('progress', p) })
+//       .then(function (result) { 
+//         console.log(result.text);
+//         console.log(getUPCCodes(result.text));
+  
+//         var UPCList = getUPCCodes(result.text);
+//         // for (var i = 0; i < UPCList.length; i += 1) {
+//           request(httpUrl + "035000521019", function(error, response, body) {
+//             if (error) response.send(error);
+    
+//             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+//             console.log('body:', body); // Print the HTML for the Google homepage.
+//           });
+//         // } 
+//         // send 
+//       })
+      
+//       console.info('\n\nPOST completed');
+
+//   });
+// });
+
+// // write the json data
+// reqPost.end();
+// reqPost.on('error', function(e) {
+//   console.error(e);
+// });
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
