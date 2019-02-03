@@ -3,9 +3,9 @@ var app = express(); // create express app
 var port = 3000;
 
 // Schema registered here for model: todo
-baseModel = require('./api/models/testModel');
+// baseModel = require('./api/models/testModel');
 
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 // mongoose instance url connection
@@ -17,16 +17,18 @@ mongoose.Promise = global.Promise;
   // Instead you can use environment variables to store the url (containing username 
 //   and password) , to do this in your local system
 
-mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost/parseTestdb', {useNewUrlParser: true});
 // var url = process.env.MONGOLAB_URI;
 // mongoose.connect(url, {useNewUrlParser: true});
 
 
-mongoose.connection.on("open", function(){
-  console.log("mongodb is connected!!");
+// mongoose.connection.on("open", function(){
+//   console.log("mongodb is connected!!");
 
-  //mongoose.connection.db.collectionNames(function)
-});
+//   //mongoose.connection.db.collectionNames(function)
+// });
+
+
 // Middleware
 app.use(bodyParser.json());
 

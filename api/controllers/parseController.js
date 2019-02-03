@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 
 var Tesseract = require('tesseract.js');
 // Schema for model "modelTasks" is registered in the controller
-var bModel = mongoose.model('baseModel');
+// var bModel = mongoose.model('baseModel');
 
 var request = require('request');
 
