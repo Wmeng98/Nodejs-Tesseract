@@ -117,6 +117,8 @@ app.post('/parse', (req, res) => {
 
   var base64Str = base64js.fromByteArray(strBinData);
 
+  console.log(">>> " + 'data:image/jpg;base64,' + base64Str);
+
   base64Img.img('data:image/jpg;base64,' + base64Str, 'img', 'work', function(err, filepath) {
     if (err) res.send(err);
     console.log("filepath: " + filepath);
