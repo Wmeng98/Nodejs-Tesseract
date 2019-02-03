@@ -80,7 +80,7 @@ exports.getBase = function(req, res) {
 exports.postImg = function(req, res) {
     // get ginary data file in string format
     
-    var strBinData = req.body.value;
+    var strBinData = req.body.Field;
     console.log("**********");
     console.log(">>>> " + strBinData);
     console.log("**********");
