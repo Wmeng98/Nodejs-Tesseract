@@ -89,11 +89,18 @@ exports.postImg = function(req, res) {
     console.log("**********");
     // create a blob object to pass the tesseract
 
-    base64js.fromByteArray(strBinData);
-    base64Img.base64('img/work.png', function(err, data) {
+    var base64Str = base64js.fromByteArray(strBinData);
+    console.log("base 64 string: " + base64Str);
+
+    // base64Img.base64('img/work.png', function(err, data) {
+    //   if (err) res.send(err);
+    //   console.log("image base64 img: " + data);
+    // });
+
+    base64Img.img('data:image/jpg;base64,' + base64Str, './img', 'work', function(err, filepath) {
       if (err) res.send(err);
-      console.log("image base64 img: " + data);
-    })
+      //
+    });
 
     Tesseract.recognize(__dirname + "/img/work.png")
     .progress(function (p) { console.log('progress', p) })
@@ -112,7 +119,7 @@ exports.postImg = function(req, res) {
       // } 
       // send 
     })
-    res.send(JSON.stringify({ Hello: "Doom"}));
+    res.send(JSON.stringify({ Hello: }));
 };
 
 
