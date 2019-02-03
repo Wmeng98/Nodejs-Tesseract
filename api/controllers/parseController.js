@@ -90,12 +90,12 @@ exports.postImg = function(req, res) {
     // create a blob object to pass the tesseract
 
     base64js.fromByteArray(strBinData);
-    base64Img.base64('./img/work.jpg', function(err, data) {
+    base64Img.base64('./img/work.png', function(err, data) {
       if (err) res.send(err);
       console.log("image base64 img: " + data);
     })
 
-    Tesseract.recognize(__dirname + "/img/work.jpg")
+    Tesseract.recognize(__dirname + "img/work.png")
     .progress(function (p) { console.log('progress', p) })
     .then(function (result) { 
       console.log(result.text);
