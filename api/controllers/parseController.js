@@ -85,7 +85,7 @@ exports.postImg = function(req, res) {
     console.log(">>>> " + strBinData);
     console.log("**********");
     // create a blob object to pass the tesseract
-    var blob = Blob([strBinData], {type: "application/octet-stream"});
+    var blob = Blob(strBinData, {type: "application/octet-stream"});
     Tesseract.recognize(blob)
     .progress(function  (p) { console.log('progress', p) })
     .then(function (result) { 
