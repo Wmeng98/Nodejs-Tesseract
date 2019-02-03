@@ -139,36 +139,40 @@ app.post('/parse', (req, res) => {
         console.log(getUPCCodes(result.text));
   
         var UPCList = getUPCCodes(result.text);
+        
+        
         for (var i = 0; i < UPCList.length; i += 1) {
           request(httpUrl + UPCList[i], function(error, response, body) {
             if (error) res.send(error);
-    
+            
+            var record = "";
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', body); // Print the HTML for the Google homepage.
             var nm = body.name;
-            var dt = Date.now;
+            
+            var date = Date.now;
+            var dt = date.toString();
+            
             var sale = body.salePrice;
             var upcode = body.upc;
             var thumb = body.thumbnailImage;
 
-            res.json(
-              {
-                  name: nm,
-                  date: dt,
-                  price: sale,
-                  code: upcode,
-                  thumbnail: thumb
-
-              }
-            );
-
+            record += nm + "#";
+            record += dt + "#";
+            record += sale + "#";
+            record += upcode + "#";
+            if (i == UPCList.length) {
+              record += thumb;            
+            } else {
+              record += thumb + "!";
+            }
           });
-        } 
+          res.send(record); // send string
+        }
         // send 
-      })
-      
+      });
+    });
       // console.info('\n\nPOST completed');
-});
 
 
 // console.log("groceryParser restful api started on port: " + port);
