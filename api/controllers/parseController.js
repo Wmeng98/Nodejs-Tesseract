@@ -82,7 +82,7 @@ exports.getBase = function(req, res) {
 // });
 exports.postImg = function(req, res) {
 
-      var strBinData = req.body.Field;
+      var strBinData = req.body["Field"];
 
       // create a blob object to pass the tesseract
   
@@ -119,30 +119,30 @@ exports.postImg = function(req, res) {
   };
 
 
-// exports.parseImg = function(req, res) {
-//   bModel.find({dataurl: req.params.imgFile}, function(err, img) {
-//     // console.log(req.params.imgFile);
-//     if (err) return res.send(err);
+exports.parseImg = function(req, res) {
+  bModel.find({dataurl: req.params.imgFile}, function(err, img) {
+    // console.log(req.params.imgFile);
+    if (err) return res.send(err);
 
 
 
-//     Tesseract.recognize(__dirname + '/img/paper.jpg')
-//     .progress(function  (p) { console.log('progress', p) })
-//     .then(function (result) { 
-//       console.log(result.text);
-//       console.log(getUPCCodes(result.text));
+    Tesseract.recognize(__dirname + '/img/paper.jpg')
+    .progress(function  (p) { console.log('progress', p) })
+    .then(function (result) { 
+      console.log(result.text);
+      console.log(getUPCCodes(result.text));
 
-//       var UPCList = getUPCCodes(result.text);
-//       // for (var i = 0; i < UPCList.length; i += 1) {
-//         request(httpUrl + "035000521019", function(error, response, body) {
-//           if (error) response.send(error);
+      var UPCList = getUPCCodes(result.text);
+      // for (var i = 0; i < UPCList.length; i += 1) {
+        request(httpUrl + "035000521019", function(error, response, body) {
+          if (error) response.send(error);
   
-//           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-//           console.log('body:', body); // Print the HTML for the Google homepage.
-//         });
-//       // } 
-//       // send 
-//     })
-//     res.json(img);
-//   });
-// };
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          console.log('body:', body); // Print the HTML for the Google homepage.
+        });
+      // } 
+      // send 
+    })
+    res.json(img);
+  });
+};
