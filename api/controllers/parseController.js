@@ -85,9 +85,14 @@ exports.postImg = function(req, res) {
     console.log(">>>> " + strBinData);
     console.log("**********");
     // create a blob object to pass the tesseract
-    var blob = Blob(strBinData, {type: "application/octet-stream"});
+
+    var blob = new Blob(strBinData, {type: "application/octet-stream"});
+
+    console.log("********")
+    console.log(blob);
+
     Tesseract.recognize(blob)
-    .progress(function  (p) { console.log('progress', p) })
+    .progress(function (p) { console.log('progress', p) })
     .then(function (result) { 
       console.log(result.text);
       console.log(getUPCCodes(result.text));
