@@ -109,6 +109,7 @@ app.get('/', (req, res) => {
 
 
 
+
 // post method for img
 app.post('/parse', (req, res) => {
   
@@ -142,40 +143,55 @@ app.post('/parse', (req, res) => {
         
         var recordList = "";
         for (var i = 0; i < UPCList.length; i += 1) {
-          request(httpUrl + UPCList[i], function(error, response, body) {
-            if (error) res.send(error);
-            var record = "";
-            
-
-            console.log(">>> reponse" + response.name);
-            var obj = JSON.parse(body);
 
 
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            console.log('body:', body); // Print the HTML for the Google homepage.
-            var nm = body.name;
 
-            // // need to jsonify the json string to work with structure
-            // console.log( body);
-            
-            var date = Date.now;
-            var dt = date.toString();
-            
-            var sale = body.salePrice;
-            var upcode = body.upc;
-            var thumb = body.thumbnailImage;
 
-            record = record + nm + "#";
-            record = record + dt + "#";
-            record = record + sale + "#";
-            record = record + upcode + "#";
-            if (i == UPCList.length) {
-              record += thumb;            
-            } else {
-              record = record + thumb + "!";
+          // shorthand syntax, buffered response
+          http.get(httpUrl + UPCList[i], function (err, res) {
+            if (err) {
+              console.error(err);
+              return;
             }
-            recordList += record;
+            console.log(res.code, res.headers, res.buffer.toString());
           });
+
+
+
+          // request(httpUrl + UPCList[i], function(error, response, body) {
+          //   if (error) res.send(error);
+          //   var record = "";
+            
+
+          //   console.log(">>> reponse" + response.name);
+          //   var obj = JSON.parse(body);
+
+
+          //   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          //   console.log('body:', body); // Print the HTML for the Google homepage.
+          //   var nm = body.name;
+
+          //   // // need to jsonify the json string to work with structure
+          //   // console.log( body);
+            
+          //   var date = Date.now;
+          //   var dt = date.toString();
+            
+          //   var sale = body.salePrice;
+          //   var upcode = body.upc;
+          //   var thumb = body.thumbnailImage;
+
+          //   record = record + nm + "#";
+          //   record = record + dt + "#";
+          //   record = record + sale + "#";
+          //   record = record + upcode + "#";
+          //   if (i == UPCList.length) {
+          //     record += thumb;            
+          //   } else {
+          //     record = record + thumb + "!";
+          //   }
+          //   recordList += record;
+          // });
         }
         res.send(recordList); // send string
         // send 
