@@ -167,8 +167,8 @@ app.post('/parse', (req, res) => {
               record += thumb + "!";
             }
           });
-          res.send(record); // send string
         }
+        res.send(record); // send string
         // send 
       });
     });
