@@ -4,7 +4,9 @@ var port = 3000;
 
 // task = require('./api/models/todoModel'),
 var mongoose = require('mongoose')
-var bodyParser = require('body-parser');
+
+var bodyParser = require('body-parser'); // Parse incoming request bodies in a 
+// middleware before your handlers, available under the req.body property.
 
 // Load the created model - task
 var bModel = require("./api/models/testModel") 
@@ -21,7 +23,7 @@ mongoose.connection.on("open", function(){
 
 // Middleware
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // for parsing application/json
 
 app.use(bodyParser.urlencoded({
   parameterLimit: 100000,

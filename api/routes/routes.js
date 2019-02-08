@@ -11,6 +11,18 @@ module.exports = function(app) {
   app.route('/parse/:str')
     .post(basicParser.postImg);
 
+
+  // Getting any url parameter
+  // http://example.com/api/parse?partI=***&partII=***
+  app.route('/api/parse')
+    .post(basicParser.postPart);
+
+
+  // Getting post parameters, need body-parser middleware
+  app.route('/api/parse/param')
+    .post(basicParser.postParam);
+
+
   // app.route('/parse/:imgFile')
   //   .get(basicParser.parseImg);
   // //   .get(todoList.getTodo)
