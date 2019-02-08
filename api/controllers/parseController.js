@@ -75,6 +75,33 @@ exports.getBase = function(req, res) {
   res.send(JSON.stringify({ Grocery: "Parser Express Server"}));
 };
 
+
+
+
+///////////////////////////////////////////////////////////////////////// GET
+
+exports.getAll = function(req, res) {
+  bModel.find({}, function(err, docs) {
+    if (err) res.send(err);
+    res.json(docs);
+  });
+};
+
+// find document with particular dataurl
+exports.getImg = function(req, res) {
+  bModel.find({ dataurl: req.params.str }, function(err, docs) {
+    if (err) res.send(err);
+    res.json(docs);
+  });
+};
+
+
+///////////////////////////////////////////////////////////////////////// GET
+
+
+
+
+///////////////////////////////////////////////////////////////////////// POST
 exports.postImg = function(req, res) {
   console.log(">>> " + req.params.str);
   var new_string = new bModel({
@@ -133,6 +160,46 @@ exports.postParam = function(req, res) {
 // binary
 
 // binary data allows you to send things which you can not enter in Postman. For example, image, audio or video files. You can send text files as well. As mentioned earlier in the form-data section, you would have to reattach a file if you are loading a request through the history or the collection.
+
+
+///////////////////////////////////////////////////////////////////////// POST
+
+
+
+///////////////////////////////////////////////////////////////////////// PUT
+
+
+
+///////////////////////////////////////////////////////////////////////// PUT
+
+exports.updateImg = function(req, res) {                                // new: true -> returns modified document instead of the original
+  bModel.findOneAndUpdate({ dataurl: req.params.str }, { dataurl: req.body.str}, {new: true}, function(err, doc) {
+    if (err) res.send(err);
+    res.json(doc);
+  });
+};
+
+///////////////////////////////////////////////////////////////////////// DELETE
+
+exports.deleteImg = function(req, res) {
+  bModel.remove({ dataurl: req.params.str }, function(err) {
+    if (err) res.send(err);
+    console.log("removed document with dataurl: " + req.params.str);
+    res.json("removed document with dataurl: " + req.params.str);
+  });
+};
+
+///////////////////////////////////////////////////////////////////////// DELETE
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -9,13 +9,17 @@ module.exports = function(app) {
 
   // parse receipt route, serialized image passed from the body
   app.route('/parse/:str')
-    .post(basicParser.postImg);
+    .post(basicParser.postImg)
+    .get(basicParser.getImg)
+    .delete(basicParser.deleteImg)
+    .put(basicParser.updateImg);
 
 
   // Getting any url parameter
   // http://example.com/api/parse?partI=***&partII=***
   app.route('/api/parse')
-    .post(basicParser.postPart);
+    .post(basicParser.postPart)
+    .get(basicParser.getAll);
 
 
   // Getting post parameters, need body-parser middleware
