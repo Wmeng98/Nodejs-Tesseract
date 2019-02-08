@@ -7,11 +7,9 @@ module.exports = function(app) {
   app.route('/')
     .get(basicParser.getBase);
 
-
-  // parse receipt route, img passed from the body
-  // app.route('/parse')
-  //   .post(basicParser.postImg);
-    // .post(basicParser.postImg);
+  // parse receipt route, serialized image passed from the body
+  app.route('/parse/:str')
+    .post(basicParser.postImg);
 
   // app.route('/parse/:imgFile')
   //   .get(basicParser.parseImg);

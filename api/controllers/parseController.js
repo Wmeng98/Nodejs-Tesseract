@@ -4,9 +4,7 @@ var mongoose = require('mongoose');
 
 var Tesseract = require('tesseract.js');
 // Schema for model "modelTasks" is registered in the controller
-console.log("reach me bb");
 var bModel = mongoose.model('walmartReceiptsDB');
-console.log("reach me 2 bb");
 
 // var request = require('request');
 
@@ -76,6 +74,26 @@ function getUPCCodes(text) { // specifically for WALMART receipts
 exports.getBase = function(req, res) {
   res.send(JSON.stringify({ Grocery: "Parser Express Server"}));
 };
+
+exports.postImg = function(req, res) {
+  console.log(">>> " + req.params.str);
+  var new_string = new bModel({
+    dataurl: req.params.str
+  });
+  new_string.save(function(err, str) {
+    if (err) res.send(err);
+    console.log("no error on post req!")
+    res.json(str);
+  });
+   
+};
+
+// var new_task = new task(req.body);
+// new_task.save(function(err, task) {
+//   if (err) res.send(err);
+//   res.json(task);
+// });
+
 
 // // bModel.find({}, function(err, img) {
 // //   if (err) res.send(err);
