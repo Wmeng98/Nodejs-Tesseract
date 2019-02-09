@@ -1,0 +1,82 @@
+Data Model:
+----------
+----------
+
+>>>  General data model for a grocery item
+
+>>> WALMART specific
+
+var walmartSchema = new schema({
+  upc: {
+    type: Number
+    required: "upc code for walmart item required"
+  },
+  productName: {
+    type: String
+    default: "N/A"
+  },
+  category: {
+    type: String
+    default: "unclassified"
+  },
+  quantity: {
+    type: Number
+    default: 1 // assumption at least 1 item
+  },
+  price: {
+    type: Number // workaround store price as cents 
+    required: "missing, need to provide item price"
+  }
+  created_date: {
+    type: Date
+    default: Date.now
+  }
+});
+
+
+
+
+
+BUSINESS LOGIC
+---------------
+---------------
+
+Primary steps...
+1. Take picture of receipt
+2. Receipt is parsed, interpretted, cleaned, returns JSON documents
+3. user can edit, review, add, delete, records before saving documents
+4. documents are saved to mongo DB
+5. documents are loaded the enxt time user requests to view their groceries
+6. backend monitors item expiration dates (if applicable)
+
+
+
+
+
+
+
+
+
+*************************************************************** 
+*********************    Reference     ***********************
+***************************************************************
+
+
+
+var taskSchema = new schema({
+  name: {
+    type: String,
+    required: 'Kindly enter the name of your taks'
+  },
+  Created_date: {
+    type: String,
+    default: "0"
+  },
+  status: {
+    type: [{
+      type: String,
+      enum: ['pending', 'ongoing', 'completed']
+    }],
+    default: ['pending']
+  }
+}, { collection: 'Tododb' });
