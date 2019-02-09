@@ -2,12 +2,12 @@
 
 # REST API for grocery.io
 1. Handles:
-  a. Parsing incoming deserialized images
-  b. CRUD Functionality for the mobile app
-  c.  ...
+  1. Parsing incoming deserialized images
+  2. CRUD Functionality for the mobile app
+  3.  ...
 
 2. Steps to run
-  a. Install node.js, mongodb, <OCR Engine>
-  b. clone the repository
-  c. npm install
-  d. npm start
+  1. Install node.js, mongodb, <OCR Engine>
+  2. clone the repository
+  3. npm install
+  4. npm start
