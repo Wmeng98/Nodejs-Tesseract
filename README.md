@@ -6,7 +6,7 @@
   2. CRUD Functionality for the mobile app
   3.  ...
 
-2. Steps to run
+# Steps to run
   1. Install node.js, mongodb, <OCR Engine>
   2. clone the repository
   3. npm install
