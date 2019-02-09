@@ -11,3 +11,4 @@
   2. clone the repository
   3. npm install
   4. npm start
+  5. "run" mongod
