@@ -86,6 +86,18 @@ exports.getPriceQueryLTE = function(req, res) {
     res.json(items);
   });
 };
+exports.getPriceQueryGTE = function(req, res) {
+  walmartModel.find({ price: { $gte: req.query.lte } }, function(err, items) {
+    if (err) res.send(err);
+    res.json(items);
+  });
+};
+exports.getPriceInRange = function(req, res) {
+  walmartModel.find({ price: { $gte: req.query.gte, $lte: req.query.lte } }, function(err, items) {
+    if (err) res.send(err);
+    res.json(items);
+  });
+};
 
 ///////////////////////////////////////////////////////////////////////// 
 

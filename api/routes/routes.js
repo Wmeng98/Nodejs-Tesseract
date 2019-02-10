@@ -15,6 +15,7 @@ module.exports = function(app) {
     .put(groceryParser.updateImg);
 
 
+  // **********************************************
   // Walmart api endpoints
   app.route('/api/walmart/:upc')
     .get(groceryParser.getUPC)
@@ -22,13 +23,19 @@ module.exports = function(app) {
     .delete(groceryParser.deleteUPC);
 
   // /api/walmart/price?price=***
-  app.route('/api/walmart/rangeQuery/price') 
-    .get(groceryParser.getPriceQueryLTE); 
+  app.route('/api/walmart/rangeQuery/priceLE') 
+    .get(groceryParser.getPriceQueryLTE);
+  app.route('/api/walmart/rangeQuery/priceGE')
+    .get(groceryParser.getPriceQueryGTE);
+  app.route('/api/walmart/rangeQuery/priceRange')
+    .get(groceryParser.getPriceInRange);
 
   app.route('/api/walmart')
     .get(groceryParser.getAllWalmart)
     .post(groceryParser.postUPC);
 
+
+  // **********************************************
 
 
   
