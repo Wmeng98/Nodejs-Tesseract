@@ -46,12 +46,17 @@ Primary steps...
 2. Receipt is parsed, interpretted, cleaned, returns JSON documents
 3. user can edit, review, add, delete, records before saving documents
 4. documents are saved to mongo DB
-5. documents are loaded the enxt time user requests to view their groceries
-6. backend monitors item expiration dates (if applicable)
+5. documents are loaded the next time user requests to view their groceries
+6. backend monitors item expiration dates (if applicable), push notifications (if applicable)
 
 
 
+NEXT STEPS
+-----------
+-----------
 
+1. Find framework to prototype front end of application
+2. Research ways to use computer vision to parse specific grocery receipts (start by recognizing which store the receipt is from)
 
 
 
