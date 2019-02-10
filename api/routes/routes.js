@@ -20,6 +20,11 @@ module.exports = function(app) {
     .get(groceryParser.getUPC)
     .put(groceryParser.updateUPC)
     .delete(groceryParser.deleteUPC);
+
+  // /api/walmart/price?price=***
+  app.route('/api/walmart/rangeQuery/price') 
+    .get(groceryParser.getPriceQueryLTE); 
+
   app.route('/api/walmart')
     .get(groceryParser.getAllWalmart)
     .post(groceryParser.postUPC);

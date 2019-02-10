@@ -42,7 +42,7 @@ exports.getImg = function(req, res) {
   });
 };
 
-
+/////////////////////////////////////////////////////////////////////////
 
 exports.getAllWalmart = function(req, res) {
   walmartModel.find({}, function(err, docs) {
@@ -78,9 +78,13 @@ exports.deleteUPC = function(req, res) { // doesn;t throw an error if document d
     console.log("removed document with upc: " + req.params.upc);
     res.json("removed document with upc: " + req.params.upc);
   });
+};
 
-
-
+exports.getPriceQueryLTE = function(req, res) {
+  walmartModel.find({ price: { $lte: req.query.lte } }, function(err, items) {
+    if (err) res.send(err);
+    res.json(items);
+  });
 };
 
 ///////////////////////////////////////////////////////////////////////// 
