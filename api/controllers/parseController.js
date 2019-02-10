@@ -13,20 +13,22 @@ var bModel = mongoose.model('walmartReceiptsDB');
 
 var receiptToParse = "customReceipt.png";
 
+// WALMART Specific libraries
+var walmartModel = mongoose.model('walmartDataDB');
 var walmart = require("../stores/walmart.js"); // import walmart module
 
+
+
 exports.getBase = function(req, res) {
-  walmart.testFun("hello world!");
+  // walmart.testFun("hello world!");
   res.send(JSON.stringify({ Grocery: "Parser Express Server"}));
 };
 
 
-
-
-///////////////////////////////////////////////////////////////////////// GET
+///////////////////////////////////////////////////////////////////////// 
 
 exports.getAll = function(req, res) {
-  bModel.find({}, function(err, docs) {
+  walmartModel.find({}, function(err, docs) {
     if (err) res.send(err);
     res.json(docs);
   });
@@ -34,23 +36,63 @@ exports.getAll = function(req, res) {
 
 // find document with particular dataurl
 exports.getImg = function(req, res) {
-  bModel.find({ dataurl: req.params.str }, function(err, docs) {
+  walmartModel.find({ upc: req.params.id }, function(err, docs) {
     if (err) res.send(err);
     res.json(docs);
   });
 };
 
 
-///////////////////////////////////////////////////////////////////////// GET
+
+exports.getAllWalmart = function(req, res) {
+  walmartModel.find({}, function(err, docs) {
+    if (err) res.send(err);
+    res.json(docs);
+  });
+};
+exports.getUPC = function(req, res) {
+  walmartModel.find({ upc: req.params.upc }, function(err, item) {
+    if (err) res.send(err);
+    res.json(item);
+  });
+};
+exports.postUPC = function(req, res) {
+  var walmartItem = new walmartModel({
+    upc: req.body.upc,
+    price: req.body.price
+  });
+  walmartItem.save(function(err, item) {
+    if (err) res.send(err);
+    res.json(item);
+  });
+};
+exports.updateUPC = function(req, res) {
+  walmartModel.findOneAndUpdate({ upc: req.params.upc }, req.body, {new: true}, function(err, doc) {
+    if (err) res.send(err);
+    res.json(doc);
+  });
+};
+exports.deleteUPC = function(req, res) { // doesn;t throw an error if document doesn't exist in the collection
+  walmartModel.remove({ upc: req.params.upc }, function(err) {
+    if (err) res.send(err);
+    console.log("removed document with upc: " + req.params.upc);
+    res.json("removed document with upc: " + req.params.upc);
+  });
+
+
+
+};
+
+///////////////////////////////////////////////////////////////////////// 
 
 
 
 
-///////////////////////////////////////////////////////////////////////// POST
+///////////////////////////////////////////////////////////////////////// 
 exports.postImg = function(req, res) {
   console.log(">>> " + req.params.str);
-  var new_string = new bModel({
-    dataurl: req.params.str
+  var new_string = new walmartModel({
+    upc: req.params.id
   });
   new_string.save(function(err, str) {
     if (err) res.send(err);
@@ -61,7 +103,7 @@ exports.postImg = function(req, res) {
 
 // Getting url param
 exports.postPart = function(req, res) {
-  var new_part_string = new bModel({
+  var new_part_string = new walmartModel({
     dataurl: req.query.partI + req.query.partII
   });
   new_part_string.save(function(err, doc) {
@@ -75,7 +117,7 @@ exports.postPart = function(req, res) {
 exports.postParam = function(req, res) {
   var id = req.body.id;
   var data = req.body.data;
-  var new_param_str = new bModel({
+  var new_param_str = new walmartModel({
     dataurl: id + data
   });
   new_param_str.save(function(err, doc) {
@@ -107,34 +149,35 @@ exports.postParam = function(req, res) {
 // binary data allows you to send things which you can not enter in Postman. For example, image, audio or video files. You can send text files as well. As mentioned earlier in the form-data section, you would have to reattach a file if you are loading a request through the history or the collection.
 
 
-///////////////////////////////////////////////////////////////////////// POST
+///////////////////////////////////////////////////////////////////////// 
 
 
 
-///////////////////////////////////////////////////////////////////////// PUT
+///////////////////////////////////////////////////////////////////////// 
 
 
 
-///////////////////////////////////////////////////////////////////////// PUT
+///////////////////////////////////////////////////////////////////////// 
 
+// req.body contains kvp of data submitted in the request body
 exports.updateImg = function(req, res) {                                // new: true -> returns modified document instead of the original
-  bModel.findOneAndUpdate({ dataurl: req.params.str }, { dataurl: req.body.str}, {new: true}, function(err, doc) {
+  walmartModel.findOneAndUpdate({ upc: req.params.id }, req.body, {new: true}, function(err, doc) {
     if (err) res.send(err);
     res.json(doc);
   });
 };
 
-///////////////////////////////////////////////////////////////////////// DELETE
+///////////////////////////////////////////////////////////////////////// 
 
 exports.deleteImg = function(req, res) {
-  bModel.remove({ dataurl: req.params.str }, function(err) {
+  walmartModel.remove({ upc: req.params.id }, function(err) {
     if (err) res.send(err);
     console.log("removed document with dataurl: " + req.params.str);
     res.json("removed document with dataurl: " + req.params.str);
   });
 };
 
-///////////////////////////////////////////////////////////////////////// DELETE
+///////////////////////////////////////////////////////////////////////// 
 
 
 
@@ -156,7 +199,7 @@ exports.deleteImg = function(req, res) {
 // });
 
 
-// // bModel.find({}, function(err, img) {
+// // walmartModel.find({}, function(err, img) {
 // //   if (err) res.send(err);
 // //   // console.log("img is: " + img);
 // //   // res.json(img);

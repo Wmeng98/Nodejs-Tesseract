@@ -9,7 +9,8 @@ var bodyParser = require('body-parser'); // Parse incoming request bodies in a
 // middleware before your handlers, available under the req.body property.
 
 // Load the created model - task
-var bModel = require("./api/models/testModel") 
+var bModel = require("./api/models/testModel");
+var walmartModel = require("./api/models/walmartModel");
 
 // mongoose instance connectino url connection
 mongoose.Promise = global.Promise;
