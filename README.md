@@ -1,5 +1,8 @@
 # Nodejs-Tesseract
 
+- The REST API for SnapTap, the grocery management app
+- Mobile client side is currently being built with react-native 
+
 # REST API for grocery.io
 1. Handles:
   1. Parsing incoming deserialized images

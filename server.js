@@ -45,7 +45,7 @@ routes(app); // register the route
 
 
 app.listen(process.env.PORT || port, function() {
-  console.log("Server listening on port %d in %s mode", this.address().port, app.settings.env);
+  console.log("CORS-enabled server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
 console.log("groceryParser restful api started on port: " + port);

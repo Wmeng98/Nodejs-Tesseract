@@ -1,7 +1,6 @@
 'use strict';
 
 var mongoose = require('mongoose');
-
 var Tesseract = require('tesseract.js');
 // Schema for model "modelTasks" is registered in the controller
 var bModel = mongoose.model('walmartReceiptsDB');
@@ -16,7 +15,6 @@ var receiptToParse = "customReceipt.png";
 // WALMART Specific libraries
 var walmartModel = mongoose.model('walmartDataDB');
 var walmart = require("../stores/walmart.js"); // import walmart module
-
 
 
 exports.getBase = function(req, res) {

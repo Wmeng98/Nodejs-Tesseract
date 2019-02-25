@@ -1,6 +1,13 @@
 'use strict';
 
 module.exports = function(app) {
+  var cors = require('cors');
+
+  // CORS Options
+  var corsOptions = {
+    origin: 'http://localhost:19001',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
   
   var groceryParser = require('../controllers/parseController');
   // base url
@@ -31,8 +38,10 @@ module.exports = function(app) {
     .get(groceryParser.getPriceInRange);
 
   app.route('/api/walmart')
-    .get(groceryParser.getAllWalmart)
+    .get(cors(corsOptions), groceryParser.getAllWalmart)
     .post(groceryParser.postUPC);
+
+  
 
 
   // **********************************************
